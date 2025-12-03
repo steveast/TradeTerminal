@@ -1,4 +1,4 @@
-import { IThemeProvider, SciChartJsNavyTheme } from "scichart";
+import { IThemeProvider, SciChartJSDarkv2Theme, SciChartJsNavyTheme } from "scichart";
 
 export interface AppThemeBase {
     SciChartJsTheme: IThemeProvider;
@@ -34,7 +34,7 @@ export interface AppThemeBase {
 }
 
 export class SciChart2022AppTheme implements AppThemeBase {
-    SciChartJsTheme = new SciChartJsNavyTheme();
+    SciChartJsTheme = new SciChartJSDarkv2Theme();
 
     // General colors
     ForegroundColor = "#FFFFFF";
