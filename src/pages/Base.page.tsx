@@ -8,30 +8,31 @@ import { createCandlestickChart } from '../components/chat/createCandlestickChar
 
 export const collectData = () => async (rootElement: string | HTMLDivElement) => {
   const { sciChartSurface, controls } = await createCandlestickChart(rootElement);
-
+  const timeframe = '4h';
+  const limit = 1000;
   const endDate = new Date(Date.now());
   const startDate = new Date();
-  startDate.setMinutes(endDate.getMinutes() - 500);
+  startDate.setHours(endDate.getHours() - limit);
 
   const priceBars: TPriceBar[] = await simpleBinanceRestClient.getCandles(
     'BTCUSDT',
-    '1m',
+    timeframe,
     startDate,
     endDate,
-    500,
+    limit,
     'com'
   );
   // Set the candles data on the chart
   controls.setData('BTC/USDT', priceBars);
 
   const startViewportRange = new Date();
-  startViewportRange.setMinutes(endDate.getMinutes() - 100);
-  endDate.setMinutes(endDate.getMinutes() + 10);
+  startViewportRange.setHours(endDate.getHours() - 200);
+  endDate.setHours(endDate.getHours() + 20);
   controls.setXRange(startViewportRange, endDate);
 
   const obs: Observable<TRealtimePriceBar> = binanceSocketClient.getRealtimeCandleStream(
     'BTCUSDT',
-    '1m'
+    timeframe
   );
   const subscription = obs.subscribe((pb) => {
     const priceBar = {
@@ -65,9 +66,6 @@ export default function BasePage() {
         }}
         style={{ display: 'flex', flexDirection: 'column', width: '75vw', flex: 'auto' }}
         innerContainerProps={{ style: { flexBasis: '80%', flexGrow: 1, flexShrink: 1 } }}
-        options={{
-          licenseKey: '', // пусто, чтобы не пытался получать лицензию с localhost
-        }}
       />
       <Terminal />
     </div>

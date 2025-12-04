@@ -200,62 +200,8 @@ const getRealtimeCandleStream = (symbol: string, interval: string) => {
   );
 };
 
-const getRandomCandleStream = (startBar: TRealtimePriceBar, interval: number) => {
-  let p: TRealtimePriceBar = startBar;
-  const rate = 300;
-  const observable = new Observable<TRealtimePriceBar>((subscriber) => {
-    // Keep track of the interval resource
-    const intervalId = setInterval(() => {
-      const r = Math.random() - 0.5;
-      const close = p.close + p.close * (r / 3000);
-      const size = Math.abs(r);
-      const eventTime = p.eventTime + rate;
-      const lastTradeSize = 10000 * size ** 14;
-      if (p.closeTime > eventTime) {
-        p = {
-          symbol: startBar.symbol,
-          close,
-          high: Math.max(p.high, close),
-          low: Math.min(p.low, close),
-          volume: p.volume + size,
-          eventTime,
-          open: p.open,
-          openTime: p.openTime,
-          closeTime: p.closeTime,
-          interval: p.interval,
-          lastTradeSize,
-          lastTradeBuyOrSell: r > 0,
-        };
-      } else {
-        p = {
-          symbol: startBar.symbol,
-          close,
-          high: close,
-          low: close,
-          volume: size,
-          eventTime,
-          open: close,
-          openTime: p.closeTime,
-          closeTime: p.closeTime + interval,
-          interval: p.interval,
-          lastTradeSize,
-          lastTradeBuyOrSell: r > 0,
-        };
-      }
-      subscriber.next(p);
-    }, rate);
-
-    // Provide a way of canceling and disposing the interval resource
-    return function unsubscribe() {
-      clearInterval(intervalId);
-    };
-  });
-  return observable;
-};
-
 export const binanceSocketClient = {
   getCandleStream,
   getTradeStream,
   getRealtimeCandleStream,
-  getRandomCandleStream,
 };
