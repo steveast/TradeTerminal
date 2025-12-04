@@ -1,12 +1,13 @@
 import * as React from "react";
-import { createCandlestickChart } from "../components/createCandlestickChart";
+import { createCandlestickChart } from "../components/chat/createCandlestickChart";
 import { SciChartReact, TResolvedReturnType } from "scichart-react";
-import { binanceSocketClient, TRealtimePriceBar } from "../components/binanceSocketClient";
+import { binanceSocketClient, TRealtimePriceBar } from "../components/binance/binanceSocketClient";
 import { Observable } from "rxjs";
-import { simpleBinanceRestClient, TPriceBar } from "../components/binanceRestClient";
+import { simpleBinanceRestClient, TPriceBar } from "../components/binance/binanceRestClient";
+import { Terminal } from "@app/components/terminal";
 
 
-export const drawExample = () => async (rootElement: string | HTMLDivElement) => {
+export const collectData = () => async (rootElement: string | HTMLDivElement) => {
   const { sciChartSurface, controls } = await createCandlestickChart(rootElement);
 
   const endDate = new Date(Date.now());
@@ -32,17 +33,17 @@ export const drawExample = () => async (rootElement: string | HTMLDivElement) =>
       close: pb.close,
       volume: pb.volume,
     };
-    controls.onNewTrade(priceBar, pb.lastTradeSize, pb.lastTradeBuyOrSell);
+    controls.onNewTrade(priceBar);
   });
 
   return { sciChartSurface, subscription, controls };
 };
 
 export default function BasePage() {
-  const initFunc = drawExample();
+  const initFunc = collectData();
 
   return (
-    <div style={{ height: '100vh', display: "flex", flexDirection: "column" }}>
+    <div style={{ height: '100vh', display: "flex" }}>
       <SciChartReact
         key="key"
         initChart={initFunc}
@@ -53,9 +54,10 @@ export default function BasePage() {
             subscription.unsubscribe();
           };
         }}
-        style={{ display: "flex", flexDirection: "column", width: "100%", flex: "auto" }}
+        style={{ display: "flex", flexDirection: "column", width: "75vw", flex: "auto" }}
         innerContainerProps={{ style: { flexBasis: "80%", flexGrow: 1, flexShrink: 1 } }}
       />
+      <Terminal />
     </div>
   );
 }

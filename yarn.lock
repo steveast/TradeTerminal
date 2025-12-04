@@ -618,6 +618,18 @@
     "@storybook/react-dom-shim" "10.1.3"
     "react-docgen" "^8.0.2"
 
+"@tabler/icons-react@^3.35.0":
+  "integrity" "sha512-XG7t2DYf3DyHT5jxFNp5xyLVbL4hMJYJhiSdHADzAjLRYfL7AnjlRfiHDHeXxkb2N103rEIvTsBRazxXtAUz2g=="
+  "resolved" "https://registry.npmjs.org/@tabler/icons-react/-/icons-react-3.35.0.tgz"
+  "version" "3.35.0"
+  dependencies:
+    "@tabler/icons" "3.35.0"
+
+"@tabler/icons@3.35.0":
+  "integrity" "sha512-yYXe+gJ56xlZFiXwV9zVoe3FWCGuZ/D7/G4ZIlDtGxSx5CGQK110wrnT29gUj52kEZoxqF7oURTk97GQxELOFQ=="
+  "resolved" "https://registry.npmjs.org/@tabler/icons/-/icons-3.35.0.tgz"
+  "version" "3.35.0"
+
 "@testing-library/dom@^10.0.0", "@testing-library/dom@^10.4.1", "@testing-library/dom@>=7.21.4":
   "integrity" "sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg=="
   "resolved" "https://registry.npmjs.org/@testing-library/dom/-/dom-10.4.1.tgz"
@@ -3290,7 +3302,7 @@
     "use-composed-ref" "^1.3.0"
     "use-latest" "^1.2.1"
 
-"react@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^18.0.0 || ^19.0.0", "react@^18.x || ^19.x", "react@^19.2.0", "react@>=16.8.0", "react@>=17.0.0", "react@>=18":
+"react@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^18.0.0 || ^19.0.0", "react@^18.x || ^19.x", "react@^19.2.0", "react@>= 16", "react@>=16.8.0", "react@>=17.0.0", "react@>=18":
   "integrity" "sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-19.2.0.tgz"
   "version" "19.2.0"

@@ -1,47 +1,33 @@
 import {
     EAutoRange,
     easing,
-    ECoordinateMode,
     EDataSeriesType,
-    EHorizontalAnchorPoint,
-    EStrokePaletteMode,
     ESeriesType,
     ENumericFormat,
-    EVerticalAnchorPoint,
     CursorModifier,
     CursorTooltipSvgAnnotation,
     DateTimeNumericAxis,
-    EllipsePointMarker,
-    FastBubbleRenderableSeries,
     FastCandlestickRenderableSeries,
     FastColumnRenderableSeries,
-    FastLineRenderableSeries,
     FastMountainRenderableSeries,
     FastOhlcRenderableSeries,
     GradientParams,
     HorizontalLineAnnotation,
-    IPointMarkerPaletteProvider,
-    IPointMetadata,
     IRenderableSeries,
     MouseWheelZoomModifier,
     NumberRange,
     NumericAxis,
     OhlcDataSeries,
     OhlcSeriesInfo,
-    parseColorToUIntArgb,
     Point,
     SeriesInfo,
     SciChartSurface,
-    TextAnnotation,
-    TPointMarkerArgb,
-    XyzDataSeries,
     XyDataSeries,
-    XyMovingAverageFilter,
     ZoomExtentsModifier,
     ZoomPanModifier,
 } from "scichart";
-import { TPriceBar } from "./binanceRestClient";
-import { appTheme } from "../themeChart";
+import { TPriceBar } from "../binance/binanceRestClient";
+import { appTheme } from "../../themeChart";
 import { VolumePaletteProvider } from "./VolumePaletteProvider";
 
 // Trades over this size will be rendered as bubbles on the chart
@@ -190,7 +176,7 @@ export const createCandlestickChart = async (rootElement: string | HTMLDivElemen
         updateLatestPriceAnnotation(priceBars[priceBars.length - 1]);
     };
 
-    const onNewTrade = (priceBar: TPriceBar, tradeSize: number, lastTradeBuyOrSell: boolean) => {
+    const onNewTrade = (priceBar: TPriceBar) => {
         // On new price bar from the exchange, we want to append or update the existing one (based on time)
         const currentIndex = candleDataSeries.count() - 1;
         const getLatestCandleDate = candleDataSeries.getNativeXValues().get(currentIndex);
