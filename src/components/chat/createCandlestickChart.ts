@@ -5,6 +5,7 @@ import {
   easing,
   EAutoRange,
   EDataSeriesType,
+  EDragMode,
   ENumericFormat,
   ESeriesType,
   FastCandlestickRenderableSeries,
@@ -19,19 +20,18 @@ import {
   NumericAxis,
   OhlcDataSeries,
   OhlcSeriesInfo,
+  PinchZoomModifier,
   Point,
   SciChartSurface,
   SeriesInfo,
   XyDataSeries,
+  YAxisDragModifier,
   ZoomExtentsModifier,
   ZoomPanModifier,
 } from 'scichart';
 import { appTheme } from '../../themeChart';
 import { TPriceBar } from '../binance/binanceRestClient';
 import { VolumePaletteProvider } from './VolumePaletteProvider';
-
-// Trades over this size will be rendered as bubbles on the chart
-export const LARGE_TRADE_THRESHOLD = 25_000;
 
 export const createCandlestickChart = async (rootElement: string | HTMLDivElement) => {
   // Create a SciChartSurface
@@ -56,8 +56,9 @@ export const createCandlestickChart = async (rootElement: string | HTMLDivElemen
       growBy: new NumberRange(0.1, 0.1),
       labelFormat: ENumericFormat.Decimal,
       labelPrecision: 2,
-      labelPrefix: '$',
-      autoRange: EAutoRange.Always,
+      labelPrefix: '',
+      autoRange: EAutoRange.Once,
+      id: 'priceAxis',
     })
   );
 
@@ -118,11 +119,17 @@ export const createCandlestickChart = async (rootElement: string | HTMLDivElemen
     new ZoomExtentsModifier(),
     new ZoomPanModifier({ enableZoom: true }),
     new MouseWheelZoomModifier(),
+    new PinchZoomModifier(),
     new CursorModifier({
-      crosshairStroke: appTheme.PaleSkyBlue,
+      crosshairStroke: 'rgba(128,128,128,0.4)', // цвет линии с прозрачностью
+      crosshairStrokeThickness: 1, // толщина
+      crosshairStrokeDashArray: [4, 4], // пунктир: 4px линия, 4px пробел
       axisLabelFill: appTheme.PaleSkyBlue,
-      crosshairStrokeThickness: 1,
-      tooltipLegendTemplate: getTooltipLegendTemplate,
+      //tooltipLegendTemplate: getTooltipLegendTemplate,
+    }),
+    new YAxisDragModifier({
+      dragMode: EDragMode.Scaling, // или Combine
+      yAxisId: 'priceAxis',
     })
   );
 
