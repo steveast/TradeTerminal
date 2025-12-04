@@ -34,6 +34,7 @@
     "rxjs": "^7.8.2",
     "scichart": "^4.0.923",
     "scichart-react": "^1.0.0",
+    "store2": "^2.14.4",
     "websocket-ts": "^2.2.1"
   },
   "devDependencies": {

@@ -1,9 +1,18 @@
-import { IconChessQueen, IconFishHook } from "@tabler/icons-react";
-import { Tabs } from '@mantine/core'
+import { IconChessQueen, IconFishHook } from '@tabler/icons-react';
+import { Tabs } from '@mantine/core';
+import { useModels } from '@app/models';
 
 export function TabsView() {
+  const { terminalModel } = useModels();
+  console.log(terminalModel.activeTab);
   return (
-    <Tabs defaultValue="stopOne" radius={0}>
+    <Tabs
+      defaultValue={terminalModel.activeTab}
+      radius={0}
+      onChange={(t) => {
+        terminalModel.commit({ activeTab: t as 'stopOne' | 'squeeze' });
+      }}
+    >
       <Tabs.List>
         <Tabs.Tab value="stopOne" leftSection={<IconChessQueen size={14} />}>
           Stop one
@@ -13,13 +22,9 @@ export function TabsView() {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="stopOne">
-        Stop one
-      </Tabs.Panel>
+      <Tabs.Panel value="stopOne">Stop one</Tabs.Panel>
 
-      <Tabs.Panel value="squeeze">
-        Squeeze catcher
-      </Tabs.Panel>
+      <Tabs.Panel value="squeeze">Squeeze catcher</Tabs.Panel>
     </Tabs>
-  )
+  );
 }

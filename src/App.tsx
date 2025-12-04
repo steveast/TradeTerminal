@@ -1,10 +1,9 @@
 import '@mantine/core/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import { models, ModelsContext } from './models';
 import { Router } from './Router';
 import { theme } from './theme';
-
-import { ModelsContext, models } from "./models";
 
 export default function App() {
   return (
@@ -12,6 +11,6 @@ export default function App() {
       <ModelsContext.Provider value={models}>
         <Router />
       </ModelsContext.Provider>
-    </MantineProvider >
+    </MantineProvider>
   );
 }

@@ -47,7 +47,7 @@ const getCandles = async (
   startTime?: Date,
   endTime?: Date,
   limit: number = 500,
-  binanceDomain = "us"
+  binanceDomain = 'us'
 ): Promise<TPriceBar[]> => {
   let url = `https://api.binance.${binanceDomain}/api/v3/klines?symbol=${symbol}&interval=${interval}`;
   if (startTime) {
@@ -60,7 +60,9 @@ const getCandles = async (
     url += `&limit=${limit}`;
   }
   try {
-    console.log(`SimpleBinanceClient: Fetching ${symbol} ${interval} from ${startTime} to ${endTime}`);
+    console.log(
+      `SimpleBinanceClient: Fetching ${symbol} ${interval} from ${startTime} to ${endTime}`
+    );
     const response = await fetch(url);
     const data = await response.json();
     return parseCandles(data);
