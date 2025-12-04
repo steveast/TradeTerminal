@@ -1,10 +1,9 @@
+import { useModels } from '@app/models';
 import { IconChessQueen, IconFishHook } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
-import { useModels } from '@app/models';
 
 export function TabsView() {
   const { terminalModel } = useModels();
-  console.log(terminalModel.activeTab);
   return (
     <Tabs
       defaultValue={terminalModel.activeTab}

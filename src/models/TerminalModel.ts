@@ -1,19 +1,19 @@
+import { LS } from '@app/utils/storage';
 import { observable, makeObservable, action, runInAction, reaction } from 'mobx';
-import store from 'store2';
 
 interface ITerminalModel {
   activeTab: 'stopOne' | 'squeeze';
 }
 
 export class TerminalModel implements ITerminalModel {
-  @observable activeTab: 'stopOne' | 'squeeze' = store.get('terminal', 'stopOne');
+  @observable activeTab: 'stopOne' | 'squeeze' = LS.get('activeTab', 'stopOne');
 
   constructor() {
     makeObservable(this);
     reaction(
       () => this.activeTab,
       (activeTab) => {
-        store.set('terminal', { activeTab });
+        LS.set('activeTab', activeTab);
       }
     );
   }
