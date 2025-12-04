@@ -23,6 +23,7 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
+    "@binance/derivatives-trading-usds-futures": "^19.0.1",
     "@mantine/core": "8.3.9",
     "@mantine/hooks": "8.3.9",
     "@tabler/icons-react": "^3.35.0",
