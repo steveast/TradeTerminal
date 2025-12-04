@@ -1,10 +1,8 @@
 import {
   CursorModifier,
-  CursorTooltipSvgAnnotation,
   DateTimeNumericAxis,
   easing,
   EAutoRange,
-  EDataSeriesType,
   EDragMode,
   ENumericFormat,
   ESeriesType,
@@ -19,11 +17,9 @@ import {
   NumberRange,
   NumericAxis,
   OhlcDataSeries,
-  OhlcSeriesInfo,
   PinchZoomModifier,
   Point,
   SciChartSurface,
-  SeriesInfo,
   XyDataSeries,
   YAxisDragModifier,
   ZoomExtentsModifier,
@@ -34,6 +30,7 @@ import { TPriceBar } from '../binance/binanceRestClient';
 import { VolumePaletteProvider } from './VolumePaletteProvider';
 
 export const createCandlestickChart = async (rootElement: string | HTMLDivElement) => {
+  SciChartSurface.setRuntimeLicenseKey('');
   // Create a SciChartSurface
   await SciChartSurface.configure({
     wasmUrl: '/scichart/scichart2d.wasm',
@@ -121,11 +118,12 @@ export const createCandlestickChart = async (rootElement: string | HTMLDivElemen
     new MouseWheelZoomModifier(),
     new PinchZoomModifier(),
     new CursorModifier({
-      crosshairStroke: 'rgba(128,128,128,0.4)', // цвет линии с прозрачностью
+      crosshairStroke: 'rgba(128,128,128,1)', // цвет линии с прозрачностью
       crosshairStrokeThickness: 1, // толщина
       crosshairStrokeDashArray: [4, 4], // пунктир: 4px линия, 4px пробел
-      axisLabelFill: appTheme.PaleSkyBlue,
-      //tooltipLegendTemplate: getTooltipLegendTemplate,
+
+      axisLabelFill: '#242426',
+      axisLabelStroke: '#c9c9c9', // обводка бейджика (опционально)
     }),
     new YAxisDragModifier({
       dragMode: EDragMode.Scaling, // или Combine
@@ -269,35 +267,4 @@ const getOverviewSeries = (defaultSeries: IRenderableSeries) => {
 export const sciChartOverview = {
   theme: appTheme.SciChartJsTheme,
   transformRenderableSeries: getOverviewSeries,
-};
-
-// Override the standard tooltip displayed by CursorModifier
-const getTooltipLegendTemplate = (
-  seriesInfos: SeriesInfo[],
-  svgAnnotation: CursorTooltipSvgAnnotation
-) => {
-  let outputSvgString = '';
-
-  // Foreach series there will be a seriesInfo supplied by SciChart. This contains info about the series under the house
-  seriesInfos.forEach((seriesInfo, index) => {
-    const y = 20 + index * 20;
-    const textColor = seriesInfo.stroke;
-    let legendText = seriesInfo.formattedYValue;
-    let separator = ':';
-    if (seriesInfo.dataSeriesType === EDataSeriesType.Ohlc) {
-      const o = seriesInfo as OhlcSeriesInfo;
-      legendText = `Open=${o.formattedOpenValue} High=${o.formattedHighValue} Low=${o.formattedLowValue} Close=${o.formattedCloseValue}`;
-    }
-    if (seriesInfo.dataSeriesType === EDataSeriesType.Xyz) {
-      legendText = '';
-      separator = '';
-    }
-    outputSvgString += `<text x="8" y="${y}" font-size="13" font-family="Verdana" fill="${textColor}">
-            ${seriesInfo.seriesName}${separator} ${legendText}
-        </text>`;
-  });
-
-  return `<svg width="100%" height="100%">
-                ${outputSvgString}
-            </svg>`;
 };

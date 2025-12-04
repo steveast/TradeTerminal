@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { Terminal } from '@app/components/terminal';
 import { Observable } from 'rxjs';
 import { SciChartReact, TResolvedReturnType } from 'scichart-react';
-import { Terminal } from '@app/components/terminal';
 import { simpleBinanceRestClient, TPriceBar } from '../components/binance/binanceRestClient';
 import { binanceSocketClient, TRealtimePriceBar } from '../components/binance/binanceSocketClient';
 import { createCandlestickChart } from '../components/chat/createCandlestickChart';
@@ -65,6 +65,9 @@ export default function BasePage() {
         }}
         style={{ display: 'flex', flexDirection: 'column', width: '75vw', flex: 'auto' }}
         innerContainerProps={{ style: { flexBasis: '80%', flexGrow: 1, flexShrink: 1 } }}
+        options={{
+          licenseKey: '', // пусто, чтобы не пытался получать лицензию с localhost
+        }}
       />
       <Terminal />
     </div>
